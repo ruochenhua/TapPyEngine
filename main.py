@@ -5,16 +5,18 @@
 import sys, pygame
 pygame.init()
 
-from MeshCreator import MeshCreator
+from MeshCreator import Mesh
 
-size = width, height = 320, 240
+from Scene import Scene1
+
+size = width, height = 720, 480
 speed = [2, 2]
 black = 0, 0, 0
-
 screen = pygame.display.set_mode(size)
 
-mesh_creator = MeshCreator()
-all_sprites = mesh_creator.CreateRectMesh((15, 30), (1, 2))
+
+scene_1 = Scene1()
+# scene_1.init_scene()
 
 running = True
 while running:
@@ -22,11 +24,17 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    all_sprites.update()
+    # all_sprites.update()
 
     screen.fill(black)
-    all_sprites.draw(screen)
+
+    meshes = scene_1.get_meshes()
+
+    for mesh in meshes:
+        pygame.draw.polygon(screen, mesh._color, mesh._points)
+
     pygame.display.flip()
+
 
 
 pygame.quit()
